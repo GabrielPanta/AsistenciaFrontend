@@ -14,7 +14,7 @@ import { LoginRequest } from '../../../services/auth/loginRequest';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-
+  loginError:string=""
   loginForm = this.formBuilder.group({
     username: ['encargado', [Validators.required]],
     password: ['123456', [Validators.required]]
@@ -40,10 +40,12 @@ login(): void {
         localStorage.setItem('authToken', response.token);
 
         // Redirigir al dashboard (ejemplo)
-        // this.router.navigate(['/dashboard']);
+        this.router.navigateByUrl('/');
+        this.loginForm.reset();
       },
       error: (err) => {
         console.error('Error en login:', err);
+        this.loginError = err;
       }
     });
   } else {
